@@ -14,7 +14,6 @@ class CasesService extends BaseService
 
     public function getAll()
     {
-        dd(Cases::with('cards')->get()->toArray());
         return Cases::select('*')->get();
     }
 

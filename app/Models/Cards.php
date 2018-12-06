@@ -24,6 +24,6 @@ class Cards extends BaseModel
 
     public function case()
     {
-        return $this->belongsTo(Cases::getTableName(), 'case_id');
+        return $this->belongsTo(Cases::class, 'case_id');
     }
 }

@@ -19,7 +19,7 @@ class CreateCasesTable extends Migration
             $table->string('client_email');
             $table->string('website');
             $table->string('country');
-            $table->integer('user_id', false, true);
+            $table->integer('user_id', false, true)->unsigned()->nullable();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

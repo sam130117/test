@@ -3,6 +3,8 @@
 namespace App\Models;
 
 
+use App\User;
+
 class Cases extends BaseModel
 {
    protected $fillable = [
@@ -19,11 +21,11 @@ class Cases extends BaseModel
 
     public function cards()
     {
-        return $this->belongsToMany(Cards::getTableName(), 'case_id', 'id');
+        return $this->hasMany(Cards::class, 'case_id', 'id');
     }
 
     public function user()
     {
-        return $this->belongsTo('user', 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }
