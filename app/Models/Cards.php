@@ -4,6 +4,11 @@ namespace App\Models;
 
 class Cards extends BaseModel
 {
+    const TYPE_CREDIT = 'credit';
+    const TYPE_DEBIT = 'debit';
+
+    protected $table = 'cards';
+
     protected $fillable = [
         'name',
         'last_number',
@@ -15,10 +20,12 @@ class Cards extends BaseModel
         'updated_at',
     ];
 
-    const TYPE_CREDIT = 'credit';
-    const TYPE_DEBIT = 'debit';
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'close_date',
+    ];
 
-    protected $table = 'cards';
 
     /* Relations */
 

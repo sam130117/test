@@ -11,7 +11,7 @@ class CasesTableSeeder extends Seeder
      */
     public function run()
     {
-        $cases = factory(\App\Models\Cases::class, 10)->make();
+        $cases = factory(\App\Models\Cases::class, 1000)->make();
         \App\Models\Cases::insert($cases->toArray());
     }
 }

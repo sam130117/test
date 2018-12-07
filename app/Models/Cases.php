@@ -7,15 +7,20 @@ use App\User;
 
 class Cases extends BaseModel
 {
-   protected $fillable = [
-       'title',
-       'client_email',
-       'website',
-       'country',
-       'user_id',
-       'created_at',
-       'updated_at',
-   ];
+    protected $fillable = [
+        'title',
+        'client_email',
+        'website',
+        'country',
+        'user_id',
+        'created_at',
+        'updated_at',
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
 
     /* Relations */
 

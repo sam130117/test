@@ -2,33 +2,24 @@
 
 namespace App;
 
+use App\Models\Cases;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
+    protected $dates = [
+        'created_at',
+        'updated_at',
     ];
 
     /* Relations */
@@ -36,6 +27,13 @@ class User extends Authenticatable
     public function cases()
     {
         return $this->hasMany(Cases::getTableName(), 'user_id');
+    }
+
+    /* Attributes */
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
     }
 
 }

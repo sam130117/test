@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Cards;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CardsFormRequest extends FormRequest
+class CardsApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,11 @@ class CardsFormRequest extends FormRequest
      */
     public function rules()
     {
-        switch (request()->method()) {
+        switch ($this->method()) {
             case 'PUT':
                 return [
                     'name'        => 'string',
-//                    'last_number' => 'string|unique:cards,last_number' . $this->card,
+                    'last_number' => 'string|unique:cards,last_number' . $this->id,
                     'total_value' => 'numeric',
                     'card_type'   => 'in:' . Cards::TYPE_CREDIT . ',' . Cards::TYPE_DEBIT,
                     'close_date'  => 'date',

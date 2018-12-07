@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
@@ -50,9 +51,27 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         if ($request->wantsJson() || $request->expectsJson()) {
-//            dd($exception , '3434');
-            if ($exception instanceof ModelNotFoundException || $exception instanceof NotFoundResourceException)
-                return response()->json(['error' => 'Resource not found.'], Response::HTTP_NOT_FOUND);
+            switch (get_class($exception)) {
+
+                case AuthenticationException::class :
+                    return response()->json([
+                        'code'  => Response::HTTP_UNAUTHORIZED,
+                        'error' => 'Unauthorized.',
+                    ], Response::HTTP_UNAUTHORIZED);
+
+                case ModelNotFoundException::class || NotFoundResourceException::class :
+                    return response()->json([
+                        'code'  => Response::HTTP_NOT_FOUND,
+                        'error' => 'Resource not found.',
+                    ], Response::HTTP_NOT_FOUND);
+
+                default:
+                    return response()->json([
+                        'code'  => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'error' => 'Internal server error.',
+                    ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
         }
         return parent::render($request, $exception);
     }

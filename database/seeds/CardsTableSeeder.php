@@ -11,7 +11,7 @@ class CardsTableSeeder extends Seeder
      */
     public function run()
     {
-        $cards = factory(\App\Models\Cards::class, 10)->make();
+        $cards = factory(\App\Models\Cards::class, 1000)->make();
         \App\Models\Cards::insert($cards->toArray());
     }
 }
