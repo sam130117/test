@@ -7,6 +7,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class Handler extends ExceptionHandler
@@ -52,23 +53,29 @@ class Handler extends ExceptionHandler
     {
         if ($request->wantsJson() || $request->expectsJson()) {
             switch (get_class($exception)) {
-
                 case AuthenticationException::class :
                     return response()->json([
-                        'code'  => Response::HTTP_UNAUTHORIZED,
-                        'error' => 'Unauthorized.',
+                        'code'    => Response::HTTP_UNAUTHORIZED,
+                        'message' => 'Unauthorized.',
                     ], Response::HTTP_UNAUTHORIZED);
 
-                case ModelNotFoundException::class || NotFoundResourceException::class :
+                case ModelNotFoundException::class :
                     return response()->json([
-                        'code'  => Response::HTTP_NOT_FOUND,
-                        'error' => 'Resource not found.',
+                        'code'    => Response::HTTP_NOT_FOUND,
+                        'message' => 'Resource not found.',
                     ], Response::HTTP_NOT_FOUND);
+
+                case ValidationException::class :
+                    return response()->json([
+                        'code'    => Response::HTTP_UNPROCESSABLE_ENTITY,
+                        'message' => 'The given data was invalid.',
+                        'errors'  => $exception->errors(),
+                    ], Response::HTTP_UNPROCESSABLE_ENTITY);
 
                 default:
                     return response()->json([
-                        'code'  => Response::HTTP_INTERNAL_SERVER_ERROR,
-                        'error' => 'Internal server error.',
+                        'code'    => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => 'Internal server error.',
                     ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 

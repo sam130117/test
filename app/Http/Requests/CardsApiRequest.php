@@ -28,7 +28,7 @@ class CardsApiRequest extends FormRequest
             case 'PUT':
                 return [
                     'name'        => 'string',
-                    'last_number' => 'string|unique:cards,last_number' . $this->id,
+                    'last_number' => 'string|unique:cards,last_number,' . $this->card,
                     'total_value' => 'numeric',
                     'card_type'   => 'in:' . Cards::TYPE_CREDIT . ',' . Cards::TYPE_DEBIT,
                     'close_date'  => 'date',
@@ -40,7 +40,7 @@ class CardsApiRequest extends FormRequest
                     'last_number' => 'required|string|unique:cards,last_number',
                     'total_value' => 'required|numeric',
                     'card_type'   => 'required|in:' . Cards::TYPE_CREDIT . ',' . Cards::TYPE_DEBIT,
-                    'close_date'  => 'date',
+                    'close_date'  => 'required|date',
                     'case_id'     => 'nullable|exists:cases,id',
                 ];
         }

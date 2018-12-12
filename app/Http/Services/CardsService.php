@@ -9,7 +9,7 @@ class CardsService extends BaseService
 
     public function getById($id)
     {
-        return Cards::where('id', $id)->first();
+        return Cards::getById($id);
     }
 
     public function getAll()
@@ -19,13 +19,11 @@ class CardsService extends BaseService
 
     public function deleteById($id)
     {
-        return Cards::where('id', $id)
-            ->delete();
+        return Cards::deleteById($id);
     }
 
     public function updateById($id, array $data)
     {
-        return Cards::where('id', $id)
-            ->update($data);
+        return Cards::updateById($id, $data);
     }
 }

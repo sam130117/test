@@ -26,15 +26,13 @@ class UsersApiRequest extends FormRequest
         switch ($this->method()) {
             case 'PUT':
                 return [
-                    'name'             => 'string',
-                    'email'            => 'email|unique:users,email' . $this->id,
-//                    'password'         => 'string|min:8',
-//                    'password_confirm' => 'required|same:password',
+                    'name'  => 'string',
+                    'email' => 'email|unique:users,email,' . $this->user,
                 ];
             default:
                 return [
                     'name'             => 'required|string',
-                    'email'            => 'required|email|unique:users,email' . $this->id,
+                    'email'            => 'required|email|unique:users,email',
                     'password'         => 'required|string|min:8',
                     'password_confirm' => 'required|same:password',
                 ];

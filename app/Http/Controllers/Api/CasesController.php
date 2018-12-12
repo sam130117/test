@@ -47,5 +47,6 @@ class CasesController extends Controller
     public function destroy($id)
     {
         $this->casesService->deleteById($id);
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }

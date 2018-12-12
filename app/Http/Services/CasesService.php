@@ -10,24 +10,22 @@ class CasesService extends BaseService
 
     public function getById($id)
     {
-        return Cases::where('id', $id)
-            ->first();
-    }
-
-    public function getAll()
-    {
-        return Cases::paginate(self::LIMIT);
-    }
-
-    public function deleteById($id)
-    {
-        return Cases::where('id', $id)
-            ->delete();
+        return Cases::getById($id);
     }
 
     public function updateById($id, array $data)
     {
-        return Cases::where('id', $id)
-            ->update($data);
+        return Cases::updateById($id, $data);
     }
+
+    public function deleteById($id)
+    {
+        return Cases::deleteById($id);
+    }
+
+    public function getAll()
+    {
+        return Cases::with(['user', 'cards'])->paginate(self::LIMIT);
+    }
+
 }

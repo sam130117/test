@@ -8,6 +8,7 @@ use App\Http\Resources\CardsResource;
 use App\Http\Services\CardsService;
 use App\Models\Cards;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
 
 class CardsController extends Controller

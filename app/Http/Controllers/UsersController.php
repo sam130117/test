@@ -11,4 +11,9 @@ class UsersController extends Controller
     {
         $this->usersService = $usersService;
     }
+
+    public function index()
+    {
+        return view('index');
+    }
 }

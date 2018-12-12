@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\UsersApiRequest;
+use App\Http\Services\UsersService;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,18 +13,19 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    protected $usersService;
+
+    public function __construct(UsersService $usersService)
+    {
+        $this->usersService = $usersService;
+    }
 
     public function login(Request $request)
     {
         if (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')])) {
-
             $user = Auth::user();
-            $tokenResult = $user->createToken('Personal Access Token');
-            $token = $tokenResult->token;
-
-            if ($request->get('remember_me', null))
-                $token->expires_at = Carbon::now()->addWeeks(1);
-            $token->save();
+            dd($user->token(), $user->tokens()->get()->toArray());
+            $tokenResult = $this->usersService->saveUserToken($user);
 
             return response()->json([
                 'code'         => Response::HTTP_OK,
@@ -33,36 +36,31 @@ class AuthController extends Controller
         } else
             return response()->json([
                 'code'  => Response::HTTP_UNAUTHORIZED,
-                'error' => 'Unauthorized.',
+                'message' => 'Unauthorized.',
             ], Response::HTTP_UNAUTHORIZED);
     }
 
     public function logout(Request $request)
     {
-        dd($request->user());
         $request->user()->token()->revoke();
         return response()->json([
-            'message' => 'Successfully logged out',
-        ]);
+            'code'    => Response::HTTP_OK,
+            'message' => 'Successfully logged out.',
+        ], Response::HTTP_OK);
     }
 
-    public function register(UsersApiRequest $request)
+    public function signUp(UsersApiRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name'       => 'required',
-            'email'      => 'required|email',
-            'password'   => 'required',
-            'c_password' => 'required|same:password',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
-        }
-//        $input = $request->all();
-//        $input['password'] = bcrypt($input['password']);
-//        $user = User::create($input);
-        $success['token'] = $user->createToken('MyApp')->accessToken;
-        $success['name'] = $user->name;
-        return response()->json(['success' => $success], $this->successStatus);
+        $data = request()->only(['name', 'email', 'password', 'password_confirm']);
+        $user = User::create($data);
+        $tokenResult = $this->usersService->saveUserToken($user);
+
+        return response()->json([
+            'code'         => Response::HTTP_OK,
+            'access_token' => $tokenResult->accessToken,
+            'token_type'   => 'Bearer',
+            'expires_at'   => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString(),
+        ], Response::HTTP_OK);
     }
 
 }

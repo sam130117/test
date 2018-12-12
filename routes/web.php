@@ -11,6 +11,21 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
+Route::get('/', 'HomeController@index');
+
+Route::group(['prefix' => 'cards'], function () {
+    Route::get('/', 'CardsController@index');
+    Route::get('/get', 'CardsController@index');
 });
+
+Route::group(['prefix' => 'cases'], function () {
+    Route::get('/', 'CasesController@index');
+});
+
+Route::group(['prefix' => 'users'], function () {
+    Route::get('/', 'UsersController@index');
+});
+
+
+
+

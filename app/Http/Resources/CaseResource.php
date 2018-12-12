@@ -14,6 +14,7 @@ class CaseResource extends JsonResource
      */
     public function toArray($request)
     {
+        $cards = $this->cards->isEmpty() ? null : new CardsResource($this->cards);
         return [
             'id'           => $this->id,
             'title'        => $this->title,
@@ -23,7 +24,7 @@ class CaseResource extends JsonResource
             'created_at'   => $this->created_at,
             'updated_at'   => $this->updated_at,
             'user'         => new UserResource($this->user),
-            'cards'        => new CardsResource($this->cards),
+            'cards'        => $cards,
         ];
     }
 }

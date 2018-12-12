@@ -7,8 +7,14 @@ use App\Http\Services\CardsService;
 class CardsController extends Controller
 {
     protected $cardsService;
+
     public function __construct(CardsService $cardsService)
     {
         $this->cardsService = $cardsService;
+    }
+
+    public function index()
+    {
+        return view('index');
     }
 }

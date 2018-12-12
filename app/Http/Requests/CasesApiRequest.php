@@ -28,7 +28,7 @@ class CasesApiRequest extends FormRequest
             case 'PUT':
                 return [
                     'title'        => 'string',
-                    'client_email' => 'email|unique:cases,client_email' . $this->id,
+                    'client_email' => 'email|unique:cases,client_email,' . $this->case,
                     'website'      => 'string',
                     'country'      => 'string',
                     'user_id'      => 'nullable|exists:users,id',
@@ -36,9 +36,9 @@ class CasesApiRequest extends FormRequest
             default:
                 return [
                     'title'        => 'required|string',
-                    'client_email' => 'required|email|unique:cases,client_email' . $this->id,
-                    'website'      => 'string',
-                    'country'      => 'string',
+                    'client_email' => 'required|email|unique:cases,client_email',
+                    'website'      => 'required|string',
+                    'country'      => 'required|string',
                     'user_id'      => 'nullable|exists:users,id',
                 ];
         }

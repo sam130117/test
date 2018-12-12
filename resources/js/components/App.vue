@@ -1,23 +1,28 @@
 <template>
-    <div>
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+    <div class="">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
             <div class="container">
-                <router-link :to="{name: 'home'}" class="navbar-brand">Home</router-link>
-                <router-link :to="{name: 'users'}" class="navbar-brand">Users</router-link>
-                <router-link :to="{name: 'cards'}" class="navbar-brand">Cards</router-link>
-                <router-link :to="{name: 'cases'}" class="navbar-brand">Cases</router-link>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <router-link :to="{name: 'home'}" class="nav-link">Home</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link :to="{name: 'users'}" class="nav-link">Users</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link :to="{name: 'cards'}" class="nav-link">Cards</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link :to="{name: 'cases'}" class="nav-link">Cases</router-link>
+                    </li>
+                </ul>
             </div>
         </nav>
+
         <main class="py-4">
-            <router-view></router-view>
+            <div class="container">
+                <router-view></router-view>
+            </div>
         </main>
     </div>
 </template>
-
-<script>
-    export default {
-        mounted() {
-            console.log('Component mounted.')
-        }
-    }
-</script>
