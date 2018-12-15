@@ -1,15 +1,39 @@
 <template>
     <div>
         <h2>Cards</h2>
-        <div class="row">
+        <!--<span>{{ getCardsTotalValueSum }}</span>- -->
+        <!--<span>{{ getCardsMaxTotalValue }}</span>-->
+        <!--<button v-on:click="reduceTotalValue(5)">sdsd</button>-->
+        <div>
+            <hr/>
+            <div class="row">
+                <div class="col-sm-3">
+                    <input class="form-control" type="text" placeholder="Search...">
+                </div>
+            </div>
+            <hr/>
 
-            <span>{{ getCardsTotalValueSum }}</span>
-            <span>{{ getCardsMaxTotalValue }}</span>
-            <button v-on:click="reduceTotalValue(5)">sdsd</button>
-            <div class="col-3" v-for="card in cards">
-                <span>{{card.name}}</span>
-                <span>{{card.last_number}}</span>
-                <span>{{card.total_value}}</span>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3 p-3 card" v-for="card in cards">
+                        <router-link :to="{name: 'card', params: { cardId: card.id }}" class="card-link">
+                            <h5 class="row">
+                            <span class="col-sm-8">
+                                <span>{{ card.name }}</span>
+                            </span>
+                                <span class="col-sm-4">
+                                <span class="badge" v-bind:class="getColorClassesByType(card.card_type)">
+                                    {{ card.card_type }}
+                                </span>
+                            </span>
+                            </h5>
+                        </router-link>
+                        <hr/>
+                        <p class="my-1">Last Number: {{ card.last_number }}</p>
+                        <p class="my-1">Total Value: {{ card.total_value }}</p>
+                        <p class="my-1">Close Date: {{ card.close_date }}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -17,6 +41,7 @@
 
 <script>
     import {mapGetters, mapActions} from 'vuex';
+    import {cardConstants}          from '../constants/index';
 
     export default {
         name    : "Cards",
@@ -28,19 +53,21 @@
             ...mapGetters(['getCardsTotalValueSum', 'getCardsMaxTotalValue'])
         },
         methods : {
-            ...mapActions(['reduceTotalValue'])
+            ...mapActions(['reduceTotalValue']),
+
+            getColorClassesByType(type)
+            {
+                let classes = {};
+                if (type === cardConstants.TYPE_CREDIT)
+                    classes['badge-primary'] = true;
+                else
+                    classes['badge-success'] = true;
+                return classes;
+            }
         },
         mounted()
         {
-            // axios.get('https://api.coindesk.com/v1/bpi/currentprice.json')
-            //     .then(response => {
-            //         this.info = response.data.bpi
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //         this.errored = true
-            //     })
-            //     .finally(() => this.loading = false)
+            this.$store.dispatch('getCards');
         }
     }
 </script>

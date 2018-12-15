@@ -19,10 +19,8 @@
             </div>
         </nav>
 
-        <main class="py-4">
-            <div class="container">
-                <router-view></router-view>
-            </div>
-        </main>
+        <div class="container bg-white py-4">
+            <router-view></router-view>
+        </div>
     </div>
 </template>

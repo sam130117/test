@@ -6,24 +6,6 @@ use App\Models\Cards;
 
 class CardsService extends BaseService
 {
+    const MODEL_NAME = Cards::class;
 
-    public function getById($id)
-    {
-        return Cards::getById($id);
-    }
-
-    public function getAll()
-    {
-        return Cards::paginate(self::LIMIT);
-    }
-
-    public function deleteById($id)
-    {
-        return Cards::deleteById($id);
-    }
-
-    public function updateById($id, array $data)
-    {
-        return Cards::updateById($id, $data);
-    }
 }

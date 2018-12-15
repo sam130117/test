@@ -15,7 +15,6 @@ Route::get('/', 'HomeController@index');
 
 Route::group(['prefix' => 'cards'], function () {
     Route::get('/', 'CardsController@index');
-    Route::get('/get', 'CardsController@index');
 });
 
 Route::group(['prefix' => 'cases'], function () {
@@ -24,6 +23,19 @@ Route::group(['prefix' => 'cases'], function () {
 
 Route::group(['prefix' => 'users'], function () {
     Route::get('/', 'UsersController@index');
+});
+
+
+/* Storage */
+
+Route::group(['prefix' => 'storage'], function () {
+    Route::group(['prefix' => 'cards'], function () {
+        Route::get('/', 'CardsController@getCards');
+        Route::get('/{card_id}', 'CardsController@getCard');
+        Route::post('/', 'CardsController@store');
+        Route::put('/{card_id}', 'CardsController@store');
+        Route::delete('/{card_id}', 'CardsController@destroy');
+    });
 });
 
 

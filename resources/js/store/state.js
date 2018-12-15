@@ -1,7 +1,5 @@
 /* state - shared data for multiple components */
 
-import {TYPE_CREDIT, TYPE_DEBIT} from "../constants/cards";
-
 let state = {
     cards: [],
     cases: [

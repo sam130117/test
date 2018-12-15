@@ -3,12 +3,41 @@
 namespace App\Http\Services;
 
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 abstract class BaseService
 {
-    const LIMIT = 20;
+    const MODEL_NAME = null;
 
-    abstract public function getById($id);
-    abstract public function updateById($id, array $data);
-    abstract public function deleteById($id);
-    abstract public function getAll();
+    public function getById($id)
+    {
+        if (static::MODEL_NAME) {
+            $instance = (static::MODEL_NAME)::where('id', $id)->first();
+            if (!$instance)
+                throw new ModelNotFoundException();
+            return $instance;
+        }
+        return null;
+    }
+
+    public function getAll()
+    {
+        if (static::MODEL_NAME)
+            return (static::MODEL_NAME)::paginate((static::MODEL_NAME)::LIMIT);
+        return null;
+    }
+
+    public function deleteById($id)
+    {
+        if (static::MODEL_NAME)
+            return (static::MODEL_NAME)::where('id', $id)->delete();
+        return null;
+    }
+
+    public function updateById($id, array $data)
+    {
+        if (static::MODEL_NAME)
+            return (static::MODEL_NAME)::where('id', $id)->update($data);
+        return null;
+    }
 }

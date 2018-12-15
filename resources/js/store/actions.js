@@ -4,11 +4,12 @@
 
 let actions = {
     getCards: (context) => {
-        axios.get(`/cards`)
-            .then(function (response) {
-                context.commit('getCards', response.cards);
+        axios.get(`/storage/cards`)
+            .then((response) => {
+                if (response.status === 200)
+                    context.commit('getCards', response.data.cards.data);
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.error(error);
             });
     }

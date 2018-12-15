@@ -9,9 +9,11 @@ import App   from './components/App'
 import Home  from './components/Home'
 import Users from './components/Users'
 import Cards from './components/Cards'
+import Card  from './components/Card'
 import Cases from './components/Cases'
 
 import store from './store/index'
+
 
 //TODO: create store with vuex, add CRUD functionality for cards, cases, users
 const router = new VueRouter({
@@ -35,8 +37,13 @@ const router = new VueRouter({
         {
             path     : '/cards',
             name     : 'cards',
-            component: Cards
+            component: Cards,
         },
+        {
+            path     : '/cards/:cardId',
+            name     : 'card',
+            component: Card
+        }
     ],
 });
 

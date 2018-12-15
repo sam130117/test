@@ -7,25 +7,7 @@ use Carbon\Carbon;
 
 class UsersService extends BaseService
 {
-    public function getById($id)
-    {
-        return User::getById($id);
-    }
-
-    public function getAll()
-    {
-        return User::paginate(self::LIMIT);
-    }
-
-    public function deleteById($id)
-    {
-        return User::deleteById($id);
-    }
-
-    public function updateById($id, array $data)
-    {
-        return User::updateById($id, $data);
-    }
+    const MODEL_NAME = User::class;
 
     public function saveUserToken(User $user)
     {

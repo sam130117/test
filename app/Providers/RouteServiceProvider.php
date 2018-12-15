@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Http\Services\CardsService;
+use App\Http\Services\CasesService;
+use App\Http\Services\UsersService;
+use App\Models\Cards;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -23,7 +27,20 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Route::pattern('card_id', '[0-9]+');
+        Route::pattern('user_id', '[0-9]+');
+        Route::pattern('case_id', '[0-9]+');
+
+
+        Route::bind('card_id', function ($param) {
+            return (new CardsService())->getById($param);
+        });
+        Route::bind('user_id', function ($param) {
+            return (new UsersService())->getById($param);
+        });
+        Route::bind('case_id', function ($param) {
+            return (new CasesService())->getById($param);
+        });
 
         parent::boot();
     }

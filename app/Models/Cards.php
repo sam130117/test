@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+
 class Cards extends BaseModel
 {
     const TYPE_CREDIT = 'credit';
@@ -26,6 +28,17 @@ class Cards extends BaseModel
         'close_date',
     ];
 
+    /* Getters & Setters */
+
+    public function getCloseDateAttribute($value)
+    {
+        return (new Carbon($value))->format('Y-m-d');
+    }
+
+    public function getTotalValueAttribute($value)
+    {
+        return '$' . number_format($value, 2);
+    }
 
     /* Relations */
 
