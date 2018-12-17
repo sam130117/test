@@ -11,6 +11,7 @@ import Users from './components/Users'
 import Cards from './components/Cards'
 import Card  from './components/Card'
 import Cases from './components/Cases'
+import Case  from './components/Case'
 
 import store from './store/index'
 
@@ -35,14 +36,19 @@ const router = new VueRouter({
             component: Cases
         },
         {
-            path     : '/cards',
-            name     : 'cards',
-            component: Cards,
+            path     : '/cases/:caseId',
+            name     : 'case',
+            component: Case
         },
         {
             path     : '/cards/:cardId',
             name     : 'card',
             component: Card
+        },
+        {
+            path     : '/cards',
+            name     : 'cards',
+            component: Cards,
         }
     ],
 });

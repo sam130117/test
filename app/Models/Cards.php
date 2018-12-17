@@ -8,6 +8,7 @@ class Cards extends BaseModel
 {
     const TYPE_CREDIT = 'credit';
     const TYPE_DEBIT = 'debit';
+    const TYPES = [self::TYPE_DEBIT, self::TYPE_CREDIT];
 
     protected $table = 'cards';
 
@@ -33,11 +34,6 @@ class Cards extends BaseModel
     public function getCloseDateAttribute($value)
     {
         return (new Carbon($value))->format('Y-m-d');
-    }
-
-    public function getTotalValueAttribute($value)
-    {
-        return '$' . number_format($value, 2);
     }
 
     /* Relations */

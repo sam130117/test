@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CardsRequest;
 use App\Http\Services\CardsService;
 use App\Models\Cards;
+use Illuminate\Http\JsonResponse;
 
 class CardsController extends Controller
 {
@@ -19,14 +21,21 @@ class CardsController extends Controller
         return view('index');
     }
 
-    public function getCard(Cards $card)
+    public function getCard(Cards $card): JsonResponse
     {
-        return response()->json(['card' => $card]);
+        return response()->json(['card' => $card, 'cardTypes' => Cards::TYPES]);
     }
 
-    public function getCards()
+    public function getCards(): JsonResponse
     {
         $cards = $this->cardsService->getAll();
         return response()->json(['cards' => $cards]);
+    }
+
+    public function store(CardsRequest $request): JsonResponse
+    {
+        dd($request->all());
+
+//        return response()->json($card);
     }
 }

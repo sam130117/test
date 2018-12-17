@@ -1,26 +1,37 @@
-
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Variables
 @import 'variables';
-
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
 .navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.card-link{
+.card-link {
     text-decoration: none;
-    color: #3b484b !important;
+    color: #0a0b0e !important;
+    &:hover {
+        color: #536467 !important;
+    }
 }
 
-.mode-area{
+.mode-area {
     &:hover {
         cursor: pointer;
         background-color: #e4e4e4;
     }
+}
+
+.cards-scroll-container {
+    height: 620px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 20px;
+}
+
+.invalid-feedback {
+    font-size: 100%!important;
 }

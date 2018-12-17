@@ -8,6 +8,6 @@ let getters = {
     },
     getCardsMaxTotalValue: state => {
         return Math.max.apply(Math, state.cards.map(function(item) { return item.total_value; }))
-    }
+    },
 };
 export default getters;

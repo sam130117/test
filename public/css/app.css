@@ -10474,11 +10474,26 @@ a.text-dark:focus {
 
 .card-link {
   text-decoration: none;
-  color: #3b484b !important;
+  color: #0a0b0e !important;
+}
+
+.card-link:hover {
+  color: #536467 !important;
 }
 
 .mode-area:hover {
   cursor: pointer;
   background-color: #e4e4e4;
+}
+
+.cards-scroll-container {
+  height: 620px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 20px;
+}
+
+.invalid-feedback {
+  font-size: 100% !important;
 }
 

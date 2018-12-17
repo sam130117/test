@@ -6,6 +6,7 @@ use App\Http\Requests\UsersApiRequest;
 use App\Http\Services\UsersService;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
@@ -20,7 +21,7 @@ class AuthController extends Controller
         $this->usersService = $usersService;
     }
 
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         if (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')])) {
             $user = Auth::user();
@@ -40,7 +41,7 @@ class AuthController extends Controller
             ], Response::HTTP_UNAUTHORIZED);
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResponse
     {
         $request->user()->token()->revoke();
         return response()->json([
@@ -49,7 +50,7 @@ class AuthController extends Controller
         ], Response::HTTP_OK);
     }
 
-    public function signUp(UsersApiRequest $request)
+    public function signUp(UsersApiRequest $request): JsonResponse
     {
         $data = request()->only(['name', 'email', 'password', 'password_confirm']);
         $user = User::create($data);

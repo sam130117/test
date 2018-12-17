@@ -9,6 +9,9 @@ use App\Http\Services\CardsService;
 use App\Models\Cards;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Response;
 
 class CardsController extends Controller
@@ -19,12 +22,12 @@ class CardsController extends Controller
         $this->cardsService = $cardsService;
     }
 
-    public function index()
+    public function index(): ResourceCollection
     {
         return new CardsResource($this->cardsService->getAll());
     }
 
-    public function store(CardsApiRequest $request)
+    public function store(CardsApiRequest $request): JsonResponse
     {
         $data = $request->only(['name', 'last_number', 'total_value', 'card_type', 'close_date', 'case_id']);
         Cards::create($data);
@@ -32,12 +35,12 @@ class CardsController extends Controller
         return response()->json(null, Response::HTTP_CREATED);
     }
 
-    public function show($id)
+    public function show($id): JsonResource
     {
         return new CardResource($this->cardsService->getById($id));
     }
 
-    public function update(CardsApiRequest $request, $id)
+    public function update(CardsApiRequest $request, $id): JsonResponse
     {
         $data = $request->only(['name', 'last_number', 'total_value', 'card_type', 'close_date', 'case_id']);
         $this->cardsService->updateById($id, $data);
@@ -45,7 +48,7 @@ class CardsController extends Controller
         return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         $this->cardsService->deleteById($id);
         return response()->json(null, Response::HTTP_NO_CONTENT);
