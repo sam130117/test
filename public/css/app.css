@@ -10466,6 +10466,10 @@ a.text-dark:focus {
   }
 }
 
+.container {
+  max-width: 1440px !important;
+}
+
 .navbar-laravel {
   background-color: #fff;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -10495,5 +10499,32 @@ a.text-dark:focus {
 
 .invalid-feedback {
   font-size: 100% !important;
+}
+
+.card-toggle-container {
+  padding-bottom: 10px;
+}
+
+.card-toggle-container:hover {
+  cursor: pointer;
+}
+
+.card-toggle-container .card-toggle-header {
+  display: block;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border: 1px solid lightgray;
+  padding: 10px;
+  font-size: 1.2em;
+}
+
+.card-toggle-container .card-toggle-header:hover {
+  background-color: #f5f5f5;
+}
+
+.card-toggle-container .card-toggle-content {
+  padding: 10px;
+  border: 1px solid lightgray;
+  border-top: none;
 }
 

@@ -9,6 +9,13 @@ class UsersService extends BaseService
 {
     const MODEL_NAME = User::class;
 
+    public function getAll()
+    {
+        if (self::MODEL_NAME)
+            return (self::MODEL_NAME)::get();
+        return null;
+    }
+
     public function saveUserToken(User $user)
     {
         $tokenResult = $user->createToken('Personal Access Token');

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CaseWithCardsRequest;
 use App\Http\Services\CasesService;
-use App\Models\Cases;
+use App\Http\Services\UsersService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CasesController extends Controller
 {
@@ -22,7 +25,14 @@ class CasesController extends Controller
     public function getCase($id): JsonResponse
     {
         $case = $this->casesService->getCaseWithCards($id);
-        return response()->json(['case' => $case]);
+        $users = (new UsersService())->getAll();
+        return response()->json(['case' => $case, 'users' => $users]);
+    }
+
+    public function store(CaseWithCardsRequest $request): JsonResponse
+    {
+        $case = $request->get('case', null);
+        return response()->json(null, Response::HTTP_OK);
     }
 
 }

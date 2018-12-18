@@ -8,8 +8,8 @@ Vue.use(Tabs);
 import App   from './components/App'
 import Home  from './components/Home'
 import Users from './components/Users'
-import Cards from './components/Cards'
-import Card  from './components/Card'
+import Cards from './components/cards/Cards'
+import Card  from './components/cards/CardsTable'
 import Cases from './components/Cases'
 import Case  from './components/Case'
 

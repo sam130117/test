@@ -7,10 +7,10 @@
         <div>
             <hr/>
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-lg-3 col-md-4 col-sm-6">
                     <input class="form-control" type="text" placeholder="Search..." v-on:input="handleFilter" v-model="search">
                 </div>
-                <div class="col-sm-3">
+                <div class="col-lg-3 col-md-4 col-sm-6">
                     <select class="form-control" v-on:change="handleFilter" v-model="cardType">
                         <option selected value="">Select Card Type...</option>
                         <option>{{ this.cardConstants.TYPE_DEBIT }}</option>
@@ -23,7 +23,7 @@
             <div class="cards-scroll-container" v-on:scroll="handleScroll">
                 <div id="cardsContainer" class="row">
                     <template v-if="cards && cards.length">
-                        <div class="col-sm-3 p-3 card" v-for="card in cards">
+                        <div class="col-lg-3 col-md-4 col-sm-6 p-3 card" v-for="card in cards">
                             <router-link :to="{name: 'case', params: { caseId: card.case_id }}" class="card-link">
                                 <h5 class="row">
                                     <span class="col-sm-8">
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-    import {cardConstants} from '../constants/index';
+    import {cardConstants} from '../../constants';
 
     export default {
         name   : "Cards",
@@ -84,7 +84,6 @@
                         console.error(error);
                     });
             },
-
             getColorClassesByType(type)
             {
                 let classes = {};
@@ -94,7 +93,6 @@
                     classes['badge-success'] = true;
                 return classes;
             },
-
             getFilterParams()
             {
                 return Object.assign({}, {
@@ -103,14 +101,12 @@
                     page    : this.page === 1 ? null : this.page,
                 });
             },
-
             handleFilter()
             {
                 this.page = 1;
                 this.didScroll = true;
                 this.getCards();
             },
-
             handleScroll(e)
             {
                 let container = e.target;
@@ -124,7 +120,7 @@
                 }
             }
         },
-        mounted()
+        created()
         {
             this.getCards();
         }

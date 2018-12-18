@@ -11,7 +11,7 @@ class CasesService extends BaseService
 
     public function getCaseWithCards($id)
     {
-        return Cases::with(['cards'])
+        return Cases::with(['cards', 'user'])
             ->where('id', $id)
             ->first();
     }
