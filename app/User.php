@@ -11,7 +11,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
 
-    const LIMIT = 20;
+    protected $perPage = 20;
 
     protected $fillable = [
         'name',

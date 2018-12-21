@@ -12,6 +12,8 @@
 */
 
 Route::get('/', 'HomeController@index');
+Route::get('/email', 'HomeController@index');
+Route::post('/email/send', 'MailController@send');
 
 Route::group(['prefix' => 'cards'], function () {
     Route::get('/{card_id}', 'CardsController@index');
@@ -39,7 +41,7 @@ Route::group(['prefix' => 'storage'], function () {
         Route::delete('/{card_id}', 'CardsController@destroy');
     });
     Route::group(['prefix' => 'cases'], function () {
-        Route::get('/', 'CasesController@getCards');
+        Route::get('/', 'CasesController@getCases');
         Route::get('/{id}', 'CasesController@getCase');
         Route::post('/', 'CasesController@store');
         Route::put('/{case_id}', 'CasesController@store');

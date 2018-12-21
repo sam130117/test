@@ -1,22 +1,21 @@
-import Vue       from 'vue'
-import VueRouter from 'vue-router'
-import Tabs      from 'vue-tabs-component';
+import Vue        from 'vue'
+import VueRouter  from 'vue-router'
+import Tabs       from 'vue-tabs-component';
+import VModal     from 'vue-js-modal';
 
 Vue.use(VueRouter);
 Vue.use(Tabs);
+Vue.use(VModal, {dynamic: true, injectModalsContainer: true});
 
 import App   from './components/App'
-import Home  from './components/Home'
 import Users from './components/Users'
 import Cards from './components/cards/Cards'
-import Card  from './components/cards/CardsTable'
 import Cases from './components/Cases'
 import Case  from './components/Case'
+import EmailForm  from './components/EmailForm'
 
 import store from './store/index'
 
-
-//TODO: create store with vuex, add CRUD functionality for cards, cases, users
 const router = new VueRouter({
     mode  : 'history',
     routes: [
@@ -24,11 +23,6 @@ const router = new VueRouter({
             path     : '/users',
             name     : 'users',
             component: Users
-        },
-        {
-            path     : '/',
-            name     : 'home',
-            component: Home
         },
         {
             path     : '/cases',
@@ -41,14 +35,14 @@ const router = new VueRouter({
             component: Case
         },
         {
-            path     : '/cards/:cardId',
-            name     : 'card',
-            component: Card
-        },
-        {
-            path     : '/cards',
+            path     : '/',
             name     : 'cards',
             component: Cards,
+        },
+        {
+            path     : '/email',
+            name     : 'email',
+            component: EmailForm,
         }
     ],
 });

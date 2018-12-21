@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BaseModel extends Model
 {
-    const LIMIT = 20;
+    protected $perPage = 20;
 
     public static function getTableName()
     {

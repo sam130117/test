@@ -19,7 +19,6 @@
                 </div>
             </div>
             <hr/>
-
             <div class="cards-scroll-container" v-on:scroll="handleScroll">
                 <div id="cardsContainer" class="row">
                     <template v-if="cards && cards.length">

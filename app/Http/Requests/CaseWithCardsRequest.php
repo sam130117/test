@@ -44,4 +44,18 @@ class CaseWithCardsRequest extends FormRequest
 
         return $rules;
     }
+
+    public function messages()
+    {
+        return [
+            'cards.*.name.required' => 'The card name field is required.',
+            'cards.*.total_value.required' => 'The card total value field is required.',
+            'cards.*.last_number.required' => 'The card last number field is required.',
+            'cards.*.card_type.required' => 'The card type field is required.',
+            'cards.*.close_date.required' => 'The card close date field is required.',
+
+            'cards.*.last_number.unique' => 'The card last number has already been taken.',
+            'user_id.exists' => 'The selected agent is invalid.',
+        ];
+    }
 }

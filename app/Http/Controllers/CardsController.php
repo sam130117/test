@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CardsRequest;
 use App\Http\Services\CardsService;
 use App\Models\Cards;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class CardsController extends Controller
 {
@@ -32,10 +32,9 @@ class CardsController extends Controller
         return response()->json(['cards' => $cards]);
     }
 
-    public function store(CardsRequest $request): JsonResponse
+    public function destroy(Cards $card): JsonResponse
     {
-        dd($request->all());
-
-//        return response()->json($card);
+        $this->cardsService->deleteById($card->id);
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }

@@ -24,6 +24,7 @@ class CardsService extends BaseService
             $cards->where('card_type', $cardType);
 
         $cards->orderBy('name', 'asc');
-        return $cards->paginate(Cards::LIMIT);
+        return $cards->paginate();
     }
+
 }

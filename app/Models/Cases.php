@@ -7,6 +7,7 @@ use App\User;
 
 class Cases extends BaseModel
 {
+    protected $perPage = 15;
     protected $fillable = [
         'title',
         'client_email',

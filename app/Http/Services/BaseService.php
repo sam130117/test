@@ -23,7 +23,7 @@ abstract class BaseService
     public function getAll()
     {
         if (static::MODEL_NAME)
-            return (static::MODEL_NAME)::paginate((static::MODEL_NAME)::LIMIT);
+            return (static::MODEL_NAME)::paginate();
         return null;
     }
 

@@ -2,13 +2,17 @@
     <div class="container">
         <h4 class="mt-4">
             <span>Case</span>
-            <template>
-                <span class="btn fa fa-edit float-right" v-on:click="changeMode" v-if="this.mode === this.commonConstants.GENERAL_MODE"></span>
-                <span class="btn fa fa-save float-right" v-on:click="save" v-else></span>
+            <template v-if="this.mode === this.commonConstants.GENERAL_MODE">
+                <span class="btn fa fa-trash float-right mx-2" v-on:click="showDeleteModal(null)"></span>
+                <span class="btn fa fa-edit float-right mx-2" v-on:click="changeMode"></span>
+            </template>
+            <template v-else>
+                <span class="btn fa fa-save float-right" v-on:click="save"></span>
             </template>
         </h4>
+        <hr/>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-4 ">
                 <table class="table table-bordered">
                     <tbody>
                     <tr>
@@ -57,7 +61,7 @@
                             <div class="form-group mb-0">
                                 <span v-model="caseData.user_id" v-if="this.mode === this.commonConstants.GENERAL_MODE">{{ caseData.user ? caseData.user.name : '' }}</span>
                                 <select class="form-control" v-bind:class="{'is-invalid': this.errors.user_id}" v-model="caseData.user_id" v-else>
-                                    <option selected value="null">Select Agent</option>
+                                    <option selected :value="null">Select Agent</option>
                                     <option v-for="user in users" :value="user.id">{{ user.name}}</option>
                                 </select>
                                 <strong class="invalid-feedback">{{this.errors.user_id ? this.errors.user_id[0] : ''}}</strong>
@@ -67,21 +71,47 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-lg-9">
-                <cards-table :cards="cards" :errors="errors" :mode="mode" v-if="cards"></cards-table>
+            <div class="col-lg-8 ">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th width="25%">Name</th>
+                        <th width="12%">Last Number</th>
+                        <th>Total Value</th>
+                        <th width="12%">Card Type</th>
+                        <th width="14%">Close Date</th>
+                        <th width="60px"></th>
+                    </tr>
+                    </thead>phpcoder2020@outlook.com kg$&85ruGFI
+
+
+                    <tbody>
+                    <cards-table-item
+                        :key="card.id"
+                        :card="card"
+                        :index="index"
+                        :mode="mode"
+                        :errors="errors"
+                        @deleteCard="showDeleteModal(index)"
+                        v-for="(card, index) in cards"></cards-table-item>
+                    </tbody>
+                </table>
             </div>
         </div>
+
+        <modals-container @close="hideDeleteModal"/>
     </div>
 </template>
 
 <script>
-    import CardsTable        from './cards/CardsTable';
-    import {commonConstants} from '../constants';
+    import CardsTableItem          from './cards/CardsTableItem';
+    import {commonConstants}       from '../constants';
+    import DeleteConfirmationModal from "./common/DeleteConfirmationModal";
 
     export default {
         name      : "Case",
         components: {
-            CardsTable,
+            CardsTableItem,
         },
         data      : () => {
             return {
@@ -117,6 +147,7 @@
             },
             save()
             {
+                this.beforeSave();
                 let id = this.caseData.id;
                 axios.put(`/storage/cases/${id}`, this.caseData)
                     .then((response) => {
@@ -125,17 +156,63 @@
                         }
                     })
                     .catch((error) => {
-                        if(error.response) {
+                        if (error.response) {
                             this.errors = error.response.data.errors;
                         }
                         console.error(error)
                     });
             },
+            beforeSave()
+            {
+                if (!this.caseData.user_id)
+                    this.caseData.user_id = null;
+            },
+            deleteCard(index)
+            {
+                axios.delete(`/storage/cards/${this.cards[index].id}`)
+                    .then((response) => {
+                        this.cards.splice(index, 1);
+                    })
+                    .catch((error) => console.error(error));
+            },
+            deleteCase()
+            {
+                axios.delete(`/storage/cases/${this.caseData.id}`)
+                    .then((response) => {
+                        this.$router.push({ name: 'cards', params: { userId: '123' } })
+
+                    })
+                    .catch((error) => console.error(error));
+            },
+            showDeleteModal(index)
+            {
+                let questionText = index !== null
+                    ? `Are you sure you want to delete card ${this.cards[index].name}?`
+                    : `Are you sure you want to delete case ${this.caseData.title}?`;
+                let data = {text: questionText};
+                if (index)
+                    data.index = index;
+
+                this.$modal.show(DeleteConfirmationModal, data,
+                    {height: '180px', pivotY: 0.1, draggable: true},
+                );
+            },
+            hideDeleteModal(data)
+            {
+                let response = data.response;
+                let index = data.index;
+                if (response === 'yes') {
+                    if (index)
+                        this.deleteCard(index);
+                    else
+                        this.deleteCase();
+                }
+            }
         },
         created()
         {
             this.getCase();
-        }
+        },
     }
 </script>
 
