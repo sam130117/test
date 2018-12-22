@@ -6,7 +6,6 @@ use App\Http\Requests\CasesApiRequest;
 use App\Http\Resources\CaseResource;
 use App\Http\Resources\CasesResource;
 use App\Http\Services\CasesService;
-use App\Models\Cases;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -29,7 +28,7 @@ class CasesController extends Controller
     public function store(CasesApiRequest $request): JsonResponse
     {
         $data = $request->only(['title', 'client_email', 'website', 'country', 'user_id']);
-        Cases::create($data);
+        $this->casesService->create($data);
 
         return response()->json(null, Response::HTTP_CREATED);
     }

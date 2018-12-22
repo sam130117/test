@@ -52,8 +52,8 @@ class AuthController extends Controller
 
     public function signUp(UsersApiRequest $request): JsonResponse
     {
-        $data = request()->only(['name', 'email', 'password', 'password_confirm']);
-        $user = User::create($data);
+        $data = $request->only(['name', 'email', 'password', 'password_confirm']);
+        $user = $this->usersService->create($data);
         $tokenResult = $this->usersService->saveUserToken($user);
 
         return response()->json([

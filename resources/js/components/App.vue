@@ -15,6 +15,9 @@
                     <li class="nav-item">
                         <router-link :to="{name: 'email'}" class="nav-link">Send email</router-link>
                     </li>
+                    <li class="nav-item">
+                        <router-link :to="{name: 'chat'}" class="nav-link">Chat</router-link>
+                    </li>
                 </ul>
             </div>
         </nav>

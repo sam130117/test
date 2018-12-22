@@ -12,14 +12,10 @@ class MailController extends Controller
 {
     public function send(MailRequest $request): JsonResponse
     {
-        $name = $request->get('name', null);
-        $email = $request->get('email', null);
-        $message = $request->get('message', null);
-        $data = compact('name', 'email', 'message');
+        $data = $request->only(['name', 'email', 'message']);
 
         $job = (new SendMailJob($data))->delay(Carbon::now()->addSeconds(5));
         dispatch($job);
-
 
         return response()->json(null, Response::HTTP_OK);
     }

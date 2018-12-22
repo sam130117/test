@@ -40,4 +40,9 @@ abstract class BaseService
             return (static::MODEL_NAME)::where('id', $id)->update($data);
         return null;
     }
+
+    public function create(array $data)
+    {
+        return (static::MODEL_NAME)::create($data);
+    }
 }

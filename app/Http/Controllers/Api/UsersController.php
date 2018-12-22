@@ -6,7 +6,6 @@ use App\Http\Requests\UsersApiRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UsersResource;
 use App\Http\Services\UsersService;
-use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -30,7 +29,7 @@ class UsersController extends Controller
     public function store(UsersApiRequest $request): JsonResponse
     {
         $data = $request->only(['name', 'email', 'password']);
-        User::create($data);
+        $this->usersService->create($data);
 
         return response()->json(null, Response::HTTP_CREATED);
     }

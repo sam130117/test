@@ -18,6 +18,20 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/accounting.js/0.4.1/accounting.min.js"></script>
+<script>
+    let script = document.createElement('script');
+    script.src = "https://cdn.socket.io/socket.io-1.4.5.js";
+    document.body.appendChild(script);
+
+    script.onload = function() {
+        window.socket = io.connect (':' + '<?= env('NODE_PORT', 3005)?>', { reconnect: true, query: { user_id: '4' } });
+        window.socket.io.on("connect_error", function(error) {
+            console.log('Connection error.');
+        });
+        alert( _ );
+    };
+</script>
+
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/vue.js') }}"></script>
 </body>

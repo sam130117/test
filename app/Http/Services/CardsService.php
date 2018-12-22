@@ -12,7 +12,7 @@ class CardsService extends BaseService
     {
         $search = request('search', null);
         $cardType = request('cardType', null);
-        $cards = Cards::select('id', 'name', 'last_number', 'total_value', 'card_type', 'close_date', 'case_id');
+        $cards = (self::MODEL_NAME)::select('id', 'name', 'last_number', 'total_value', 'card_type', 'close_date', 'case_id');
 
         if ($search)
             $cards->where(function ($query) use ($search) {

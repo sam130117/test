@@ -13,6 +13,8 @@
 
 Route::get('/', 'HomeController@index');
 Route::get('/email', 'HomeController@index');
+Route::get('/chat', 'HomeController@index');
+Route::post('/chat/send', 'ChatController@sendMessage');
 Route::post('/email/send', 'MailController@send');
 
 Route::group(['prefix' => 'cards'], function () {
