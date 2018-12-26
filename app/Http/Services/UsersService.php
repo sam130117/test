@@ -28,4 +28,18 @@ class UsersService extends BaseService
         $token->save();
         return $tokenResult;
     }
+
+    public function getAllIds()
+    {
+        return (self::MODEL_NAME)::select('id')->get()->pluck('id')->toArray();
+    }
+
+    public function getRandomUser()
+    {
+        $userIds = $this->getAllIds();
+        $randomUserId = array_rand($userIds,1);
+
+        return (self::MODEL_NAME)::where('id', $randomUserId)->first();
+    }
+
 }

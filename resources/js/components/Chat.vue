@@ -9,26 +9,18 @@
 </template>
 
 <script>
-
-    // var socket = io.connect('http://localhost:3005');
-    // socket.on('message', function (data) {
-    //     console.log(data, 111);
-    //     // data = jQuery.parseJSON(data);
-    //     // console.log(data.user);
-    //     $( "#messages" ).append( "<strong>"+data.user+":</strong><p>"+data.message+"</p>" );
-    // });
     export default {
         name   : "Chat",
         data   : () => {
             return {
-                message: '',
-                result : '',
+                message        : '',
+                result         : '',
             }
         },
         methods: {
             send()
             {
-                axios.post(`/chat/send`, this.message)
+                axios.post(`/chat/send`, {message: this.message})
                     .then((response) => {
                         if (response.status === 200) {
                             this.result = 'Send';

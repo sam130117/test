@@ -28,7 +28,6 @@
         window.socket.io.on("connect_error", function(error) {
             console.log('Connection error.');
         });
-        alert( _ );
     };
 </script>
 

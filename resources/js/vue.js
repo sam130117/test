@@ -53,6 +53,10 @@ const router = new VueRouter({
         }
     ],
 });
+// let socket = io.connect('http://localhost:3005');
+window.socket.on('message', (data) => {
+    store.dispatch('addNewMessage', data);
+});
 
 const app = new Vue({
     el        : '#app',

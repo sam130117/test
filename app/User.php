@@ -24,6 +24,11 @@ class User extends Authenticatable
         'updated_at',
     ];
 
+    protected $hidden = [
+        'password',
+        'email_verified_at',
+    ];
+
     /* Relations */
 
     public function cases()
