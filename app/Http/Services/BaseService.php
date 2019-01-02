@@ -3,46 +3,65 @@
 namespace App\Http\Services;
 
 
+use App\Exceptions\ServiceException;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 abstract class BaseService
 {
-    const MODEL_NAME = null;
+    protected $model = null;
+
+    /**
+     * BaseService constructor.
+     * @throws ServiceException
+     */
+    public function __construct()
+    {
+        $modelName = $this->model();
+
+        if (!class_exists($modelName))
+            throw new ServiceException("Class {$modelName} doesn't exists.");
+
+        $model = new $modelName();
+
+        if (!$model instanceof Model)
+            throw new ServiceException("Class {$modelName} must be an instance of " . Model::class . '.');
+        $this->model = $model;
+    }
+
+    abstract function model(): string;
 
     public function getById($id)
     {
-        if (static::MODEL_NAME) {
-            $instance = (static::MODEL_NAME)::where('id', $id)->first();
-            if (!$instance)
-                throw new ModelNotFoundException();
-            return $instance;
-        }
-        return null;
+        $instance = $this->model::where('id', $id)->first();
+        if (!$instance)
+            throw new ModelNotFoundException();
+        return $instance;
     }
 
     public function getAll()
     {
-        if (static::MODEL_NAME)
-            return (static::MODEL_NAME)::paginate();
+        if ($this->model)
+            return $this->model::paginate();
         return null;
     }
 
     public function deleteById($id)
     {
-        if (static::MODEL_NAME)
-            return (static::MODEL_NAME)::where('id', $id)->delete();
+        if ($this->model)
+            return $this->model::where('id', $id)->delete();
         return null;
     }
 
     public function updateById($id, array $data)
     {
-        if (static::MODEL_NAME)
-            return (static::MODEL_NAME)::where('id', $id)->update($data);
+        if ($this->model)
+            return $this->model::where('id', $id)->update($data);
         return null;
     }
 
     public function create(array $data)
     {
-        return (static::MODEL_NAME)::create($data);
+        return $this->model::create($data);
     }
 }

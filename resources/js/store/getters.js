@@ -6,8 +6,8 @@ let getters = {
     //         return prev + current.total_value;
     //     }, 0);
     // },
-    // getCardsMaxTotalValue: state => {
-    //     return Math.max.apply(Math, state.cards.map(function(item) { return item.total_value; }))
-    // },
+    messageList: state => {
+        return state.messages;
+    },
 };
 export default getters;

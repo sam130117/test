@@ -7,12 +7,15 @@ use Carbon\Carbon;
 
 class UsersService extends BaseService
 {
-    const MODEL_NAME = User::class;
+    function model(): string
+    {
+        return User::class;
+    }
 
     public function getAll()
     {
-        if (self::MODEL_NAME)
-            return (self::MODEL_NAME)::get();
+        if ($this->model)
+            return $this->model::get();
         return null;
     }
 
@@ -31,7 +34,7 @@ class UsersService extends BaseService
 
     public function getAllIds()
     {
-        return (self::MODEL_NAME)::select('id')->get()->pluck('id')->toArray();
+        return $this->model::select('id')->get()->pluck('id')->toArray();
     }
 
     public function getRandomUser()
@@ -39,7 +42,7 @@ class UsersService extends BaseService
         $userIds = $this->getAllIds();
         $randomUserId = array_rand($userIds,1);
 
-        return (self::MODEL_NAME)::where('id', $randomUserId)->first();
+        return $this->model::where('id', $randomUserId)->first();
     }
 
 }

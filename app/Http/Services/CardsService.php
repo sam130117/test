@@ -6,13 +6,17 @@ use App\Models\Cards;
 
 class CardsService extends BaseService
 {
-    const MODEL_NAME = Cards::class;
+
+    function model(): string
+    {
+        return Cards::class;
+    }
 
     public function getAll()
     {
         $search = request('search', null);
         $cardType = request('cardType', null);
-        $cards = (self::MODEL_NAME)::select('id', 'name', 'last_number', 'total_value', 'card_type', 'close_date', 'case_id');
+        $cards = $this->model::select('id', 'name', 'last_number', 'total_value', 'card_type', 'close_date', 'case_id');
 
         if ($search)
             $cards->where(function ($query) use ($search) {

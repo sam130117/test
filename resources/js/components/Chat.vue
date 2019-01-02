@@ -3,21 +3,35 @@
         <h4>Chat</h4>
 
         <textarea class="form-control my-2" rows="5" v-model="message"></textarea>
-        <button class="btn btn-success" v-on:click="send">Send</button>
-        <span v-model="result"></span>
+        <button class="btn btn-success" v-on:click="emitEvent">Send</button>
+        <span v-for="(message, date) in messageList">
+            Date: {{ date }}
+            Message: {{ message.message }}
+        </span>
     </div>
 </template>
 
 <script>
+    import {store, mapGetters} from 'vuex'
+
     export default {
-        name   : "Chat",
-        data   : () => {
+        name    : "Chat",
+        data    : () => {
             return {
-                message        : '',
-                result         : '',
+                message: '',
+                result : '',
             }
         },
-        methods: {
+        computed: {
+            messageList()
+            {
+                return this.$store.messages;
+            }
+            // ...mapGetters([
+            //     'messageList',
+            // ])
+        },
+        methods : {
             send()
             {
                 axios.post(`/chat/send`, {message: this.message})
@@ -27,8 +41,14 @@
                         }
                     })
                     .catch((error) => console.error(error));
+            },
+            async emitEvent()
+            {
+                console.log('emit');
+                let response = await this.$socket.emit('message', 'hello');
+                console.log(response);
             }
-        }
+        },
     }
 </script>
 

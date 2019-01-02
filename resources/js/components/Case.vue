@@ -82,7 +82,7 @@
                         <th width="14%">Close Date</th>
                         <th width="60px"></th>
                     </tr>
-                    </thead>phpcoder2020@outlook.com kg$&85ruGFI
+                    </thead>
 
 
                     <tbody>

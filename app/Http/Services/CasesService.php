@@ -7,12 +7,15 @@ use App\Models\Cases;
 
 class CasesService extends BaseService
 {
-    const MODEL_NAME = Cases::class;
-
+    function model(): string
+    {
+        return Cases::class;
+    }
+    
     public function getAll()
     {
         $search = request()->get('search', null);
-        $query = (self::MODEL_NAME)::select('id', 'title');
+        $query = $this->model::select('id', 'title');
         if ($search)
             $query->where('title', 'LIKE', "%$search%");
         return $query->paginate();
@@ -20,14 +23,14 @@ class CasesService extends BaseService
 
     public function getCaseWithCards($id)
     {
-        return (self::MODEL_NAME)::with(['cards', 'user'])
+        return $this->model::with(['cards', 'user'])
             ->where('id', $id)
             ->first();
     }
 
     public function updateByIdWithCards($id, array $caseData, ?array $cardsData)
     {
-        $case = (self::MODEL_NAME)::with('cards')->find($id);
+        $case = $this->model::with('cards')->find($id);
         $case->fill($caseData);
         $case->save();
 
