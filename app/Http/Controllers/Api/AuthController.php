@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\UsersApiRequest;
-use App\Http\Services\UsersService;
+use App\Http\Repositories\UsersRepository;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -16,7 +16,7 @@ class AuthController extends Controller
 {
     protected $usersService;
 
-    public function __construct(UsersService $usersService)
+    public function __construct(UsersRepository $usersService)
     {
         $this->usersService = $usersService;
     }

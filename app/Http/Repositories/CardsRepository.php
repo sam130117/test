@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Http\Repositories;
 
 use App\Models\Cards;
 
-class CardsService extends BaseService
+class CardsRepository extends BaseRepository
 {
-
     function model(): string
     {
         return Cards::class;

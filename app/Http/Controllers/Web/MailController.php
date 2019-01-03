@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
 use App\Http\Requests\MailRequest;
 use App\Jobs\SendMailJob;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+
 
 class MailController extends Controller
 {

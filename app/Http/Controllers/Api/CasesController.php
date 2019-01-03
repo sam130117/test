@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\CasesApiRequest;
 use App\Http\Resources\CaseResource;
 use App\Http\Resources\CasesResource;
-use App\Http\Services\CasesService;
+use App\Http\Repositories\CasesRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -15,7 +15,7 @@ use Illuminate\Http\Response;
 class CasesController extends Controller
 {
     protected $casesService;
-    public function __construct(CasesService $casesService)
+    public function __construct(CasesRepository $casesService)
     {
         $this->casesService = $casesService;
     }

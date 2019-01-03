@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\UsersApiRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UsersResource;
-use App\Http\Services\UsersService;
+use App\Http\Repositories\UsersRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -16,7 +16,7 @@ class UsersController extends Controller
 {
     protected $usersService;
 
-    public function __construct(UsersService $usersService)
+    public function __construct(UsersRepository $usersService)
     {
         $this->usersService = $usersService;
     }

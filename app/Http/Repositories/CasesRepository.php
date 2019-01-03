@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Http\Repositories;
 
 
 use App\Models\Cases;
 
-class CasesService extends BaseService
+class CasesRepository extends BaseRepository
 {
     function model(): string
     {

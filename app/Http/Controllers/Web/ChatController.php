@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
-use App\Http\Services\UsersService;
+use App\Http\Repositories\UsersRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redis;
+use App\Http\Controllers\Controller;
+
 
 class ChatController extends Controller
 {
     protected $userService;
-    public function __construct(UsersService $userService)
+    public function __construct(UsersRepository $userService)
     {
         $this->userService = $userService;
     }

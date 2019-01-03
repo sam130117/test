@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\CardsApiRequest;
 use App\Http\Resources\CardResource;
 use App\Http\Resources\CardsResource;
-use App\Http\Services\CardsService;
+use App\Http\Repositories\CardsRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -15,7 +15,7 @@ use Illuminate\Http\Response;
 class CardsController extends Controller
 {
     protected $cardsService;
-    public function __construct(CardsService $cardsService)
+    public function __construct(CardsRepository $cardsService)
     {
         $this->cardsService = $cardsService;
     }

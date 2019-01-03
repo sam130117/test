@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Http\Repositories;
 
 use App\User;
 use Carbon\Carbon;
 
-class UsersService extends BaseService
+class UsersRepository extends BaseRepository
 {
     function model(): string
     {

@@ -1,17 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
 use App\User;
 use Laravel\Cashier\Cashier;
 use Stripe\Stripe;
 use Stripe\Token;
+use App\Http\Controllers\Controller;
+
 
 class HomeController extends Controller
 {
 
     public function index()
     {
+//        $person = new Person();
+//        dd($person);
 //        return $this->stripeExample();
         return view('index');
     }
@@ -42,3 +46,26 @@ class HomeController extends Controller
         }
     }
 }
+
+//class Person
+//{
+//    private $_name;
+//    private $_age;
+//
+//    public function __set($property, $value)
+//    {
+//        $method = "set{$property}";
+//        if(method_exists($this, $method)) {
+//            return $this->$method($value);
+//        }
+//        return null;
+//    }
+//
+//    public function setName($value)
+//    {
+//        $this->_name = $value;
+//        if(!is_null($value)) {
+//            $this->_name = $value;
+//        }
+//    }
+//}

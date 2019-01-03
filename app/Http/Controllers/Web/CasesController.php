@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
 use App\Http\Requests\CaseWithCardsRequest;
-use App\Http\Services\CasesService;
-use App\Http\Services\UsersService;
+use App\Http\Repositories\CasesRepository;
+use App\Http\Repositories\UsersRepository;
 use App\Models\Cases;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+
 
 class CasesController extends Controller
 {
     protected $casesService;
 
-    public function __construct(CasesService $casesService)
+    public function __construct(CasesRepository $casesService)
     {
         $this->casesService = $casesService;
     }
@@ -33,7 +35,7 @@ class CasesController extends Controller
     public function getCase($id): JsonResponse
     {
         $case = $this->casesService->getCaseWithCards($id);
-        $users = (new UsersService())->getAll();
+        $users = (new UsersRepository())->getAll();
 
         return response()->json(['case' => $case, 'users' => $users]);
     }

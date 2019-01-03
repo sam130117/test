@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
-use App\Http\Services\CardsService;
+use App\Http\Repositories\CardsRepository;
 use App\Models\Cards;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+
 
 class CardsController extends Controller
 {
     protected $cardsService;
 
-    public function __construct(CardsService $cardsService)
+    public function __construct(CardsRepository $cardsService)
     {
         $this->cardsService = $cardsService;
     }

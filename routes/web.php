@@ -11,24 +11,24 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
-Route::get('/email', 'HomeController@index');
-Route::get('/chat', 'HomeController@index');
-Route::post('/chat/send', 'ChatController@sendMessage');
-Route::post('/email/send', 'MailController@send');
+Route::get('/', 'Web\HomeController@index');
+Route::get('/email', 'Web\HomeController@index');
+Route::get('/chat', 'Web\HomeController@index');
+Route::post('/chat/send', 'Web\ChatController@sendMessage');
+Route::post('/email/send', 'Web\MailController@send');
 
 Route::group(['prefix' => 'cards'], function () {
-    Route::get('/{card_id}', 'CardsController@index');
-    Route::get('/', 'CardsController@index');
+    Route::get('/{card_id}', 'Web\CardsController@index');
+    Route::get('/', 'Web\CardsController@index');
 });
 
 Route::group(['prefix' => 'cases'], function () {
-    Route::get('/', 'CasesController@index');
-    Route::get('/{case_id}', 'CasesController@index');
+    Route::get('/', 'Web\CasesController@index');
+    Route::get('/{case_id}', 'Web\CasesController@index');
 });
 
 Route::group(['prefix' => 'users'], function () {
-    Route::get('/', 'UsersController@index');
+    Route::get('/', 'Web\UsersController@index');
 });
 
 
@@ -36,18 +36,18 @@ Route::group(['prefix' => 'users'], function () {
 
 Route::group(['prefix' => 'storage'], function () {
     Route::group(['prefix' => 'cards'], function () {
-        Route::get('/', 'CardsController@getCards');
-        Route::get('/{card_id}', 'CardsController@getCard');
-        Route::post('/', 'CardsController@store');
-        Route::put('/{card_id}', 'CardsController@store');
-        Route::delete('/{card_id}', 'CardsController@destroy');
+        Route::get('/', 'Web\CardsController@getCards');
+        Route::get('/{card_id}', 'Web\CardsController@getCard');
+        Route::post('/', 'Web\CardsController@store');
+        Route::put('/{card_id}', 'Web\CardsController@store');
+        Route::delete('/{card_id}', 'Web\CardsController@destroy');
     });
     Route::group(['prefix' => 'cases'], function () {
-        Route::get('/', 'CasesController@getCases');
-        Route::get('/{id}', 'CasesController@getCase');
-        Route::post('/', 'CasesController@store');
-        Route::put('/{case_id}', 'CasesController@store');
-        Route::delete('/{case_id}', 'CasesController@destroy');
+        Route::get('/', 'Web\CasesController@getCases');
+        Route::get('/{id}', 'Web\CasesController@getCase');
+        Route::post('/', 'Web\CasesController@store');
+        Route::put('/{case_id}', 'Web\CasesController@store');
+        Route::delete('/{case_id}', 'Web\CasesController@destroy');
     });
 });
 
