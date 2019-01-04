@@ -1,52 +1,75 @@
 <template>
-    <div class="col-lg-8 offset-lg-2">
-        <h4>Chat</h4>
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="alert" v-bind:class="{ 'alert-success': isConnected, 'alert-danger': !isConnected }">
+                <strong>{{ isConnected ? 'Connected to server.' : 'No Connection with server.' }}</strong>
+            </div>
 
-        <textarea class="form-control my-2" rows="5" v-model="message"></textarea>
-        <button class="btn btn-success" v-on:click="emitEvent">Send</button>
-        <span v-for="(message, date) in messageList">
-            Date: {{ date }}
-            Message: {{ message.message }}
-        </span>
+            <h4>Chat</h4>
+
+            <textarea class="form-control my-2" rows="3" v-model="message"></textarea>
+            <button class="btn btn-success" v-on:click="send">Send</button>
+
+
+            <div class="row">
+                <div class="container my-4">
+                    <h4>Messages</h4>
+                    <div class="messages-container">
+                        <div class="message-container text-right" v-for="item in messageList" :key="item.date">
+                            <span class="message">{{ item.text }}</span>
+                            <div class="date">{{ item.date }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-    import {store, mapGetters} from 'vuex'
+    import {mapGetters, mapActions} from 'vuex';
 
     export default {
         name    : "Chat",
         data    : () => {
             return {
-                message: '',
-                result : '',
+                message    : '',
+                result     : '',
+                isConnected: false,
             }
         },
         computed: {
-            messageList()
+            // messageList()
+            // {
+            //     return this.$store.messages;
+            // }
+            ...mapGetters([
+                'messageList',
+            ])
+        },
+        sockets : {
+            connect()
             {
-                return this.$store.messages;
+                this.isConnected = true;
+            },
+
+            disconnect()
+            {
+                this.isConnected = false;
+            },
+
+            // Fired when the server sends something on the "receiveMessage" channel.
+            receiveMessage(data)
+            {
+                this.$store.dispatch('addNewMessage', data);
+                // this.socketMessage = data;
             }
-            // ...mapGetters([
-            //     'messageList',
-            // ])
         },
         methods : {
             send()
             {
-                axios.post(`/chat/send`, {message: this.message})
-                    .then((response) => {
-                        if (response.status === 200) {
-                            this.result = 'Send';
-                        }
-                    })
-                    .catch((error) => console.error(error));
-            },
-            async emitEvent()
-            {
-                console.log('emit');
-                let response = await this.$socket.emit('message', 'hello');
-                console.log(response);
+                this.$socket.emit('send-message', {'message': this.message, 'user': 'testUser'});
+                this.message = '';
             }
         },
     }

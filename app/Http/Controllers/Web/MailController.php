@@ -15,7 +15,6 @@ class MailController extends Controller
     public function send(MailRequest $request): JsonResponse
     {
         $data = $request->only(['name', 'email', 'message']);
-
         $job = (new SendMailJob($data))->delay(Carbon::now()->addSeconds(5));
         dispatch($job);
 

@@ -3,7 +3,9 @@
 namespace App\Http\Repositories;
 
 
+use App\Models\BaseModel;
 use App\Models\Cases;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CasesRepository extends BaseRepository
 {
@@ -12,23 +14,23 @@ class CasesRepository extends BaseRepository
         return Cases::class;
     }
     
-    public function getAll()
+    public function getAll(): LengthAwarePaginator
     {
         $search = request()->get('search', null);
-        $query = $this->model::select('id', 'title');
+        $cases = $this->model::select('id', 'title');
         if ($search)
-            $query->where('title', 'LIKE', "%$search%");
-        return $query->paginate();
+            $cases->where('title', 'LIKE', "%$search%");
+        return $cases->paginate();
     }
 
-    public function getCaseWithCards($id)
+    public function getCaseWithCards($id): BaseModel
     {
         return $this->model::with(['cards', 'user'])
             ->where('id', $id)
             ->first();
     }
 
-    public function updateByIdWithCards($id, array $caseData, ?array $cardsData)
+    public function updateByIdWithCards($id, array $caseData, ?array $cardsData): BaseModel
     {
         $case = $this->model::with('cards')->find($id);
         $case->fill($caseData);

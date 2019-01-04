@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    protected $usersService;
+    protected $usersRepository;
 
-    public function __construct(UsersRepository $usersService)
+    public function __construct(UsersRepository $usersRepository)
     {
-        $this->usersService = $usersService;
+        $this->usersRepository = $usersRepository;
     }
 
     public function login(Request $request): JsonResponse
@@ -26,7 +26,7 @@ class AuthController extends Controller
         if (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')])) {
             $user = Auth::user();
             dd($user->token(), $user->tokens()->get()->toArray());
-            $tokenResult = $this->usersService->saveUserToken($user);
+            $tokenResult = $this->usersRepository->saveUserToken($user);
 
             return response()->json([
                 'code'         => Response::HTTP_OK,
@@ -53,8 +53,8 @@ class AuthController extends Controller
     public function signUp(UsersApiRequest $request): JsonResponse
     {
         $data = $request->only(['name', 'email', 'password', 'password_confirm']);
-        $user = $this->usersService->create($data);
-        $tokenResult = $this->usersService->saveUserToken($user);
+        $user = $this->usersRepository->create($data);
+        $tokenResult = $this->usersRepository->saveUserToken($user);
 
         return response()->json([
             'code'         => Response::HTTP_OK,

@@ -9,5 +9,8 @@ let getters = {
     messageList: state => {
         return state.messages;
     },
+    isUserLoggedIn: state => {
+        return state.authUser;
+    },
 };
 export default getters;

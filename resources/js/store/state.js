@@ -1,7 +1,8 @@
 /* state - shared data for multiple components */
 
 let state = {
-    messages: {}
+    authUser: null,
+    messages: []
 };
 
 export default state;

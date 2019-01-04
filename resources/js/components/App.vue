@@ -1,6 +1,6 @@
 <template>
-    <div class="">
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark" v-if="isUserLoggedIn">
             <div class="container">
                 <ul class="navbar-nav">
                     <li class="nav-item">
@@ -27,3 +27,14 @@
         </div>
     </div>
 </template>
+
+<script>
+    import {mapGetters} from 'vuex';
+
+    export default {
+        name: "App",
+        computed: {
+            ...mapGetters(['isUserLoggedIn'])
+        }
+    }
+</script>

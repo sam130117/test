@@ -9,6 +9,7 @@ use App\Http\Repositories\UsersRepository;
 class UsersController extends Controller
 {
     protected $usersService;
+
     public function __construct(UsersRepository $usersService)
     {
         $this->usersService = $usersService;

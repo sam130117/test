@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Web;
 use App\Http\Requests\CaseWithCardsRequest;
 use App\Http\Repositories\CasesRepository;
 use App\Http\Repositories\UsersRepository;
+use App\Http\Services\CasesService;
 use App\Models\Cases;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 
@@ -15,10 +15,14 @@ use App\Http\Controllers\Controller;
 class CasesController extends Controller
 {
     protected $casesService;
+    protected $casesRepository;
+    protected $usersRepository;
 
-    public function __construct(CasesRepository $casesService)
+    public function __construct(CasesService $casesService, CasesRepository $casesRepository, UsersRepository $usersRepository)
     {
         $this->casesService = $casesService;
+        $this->casesRepository = $casesRepository;
+        $this->usersRepository = $usersRepository;
     }
 
     public function index()
@@ -26,33 +30,31 @@ class CasesController extends Controller
         return view('index');
     }
 
-    public function getCases(Request $request)
+    public function getCases(): JsonResponse
     {
-        $cases = $this->casesService->getAll();
+        $cases = $this->casesRepository->getAll();
         return response()->json(['cases' => $cases], Response::HTTP_OK);
     }
 
     public function getCase($id): JsonResponse
     {
-        $case = $this->casesService->getCaseWithCards($id);
-        $users = (new UsersRepository())->getAll();
-
-        return response()->json(['case' => $case, 'users' => $users]);
+        $data = $this->casesService->getCaseWithUsers($id);
+        return response()->json($data);
     }
 
     public function store(CaseWithCardsRequest $request): JsonResponse
     {
         $caseId = $request->get('id');
-        $caseData = $request->only([ 'title', 'client_email', 'website', 'country', 'user_id']);
+        $caseData = $request->only(['title', 'client_email', 'website', 'country', 'user_id']);
         $cardsData = $request->only('cards');
-        $this->casesService->updateByIdWithCards($caseId, $caseData, $cardsData['cards'] ?? null);
+        $this->casesRepository->updateByIdWithCards($caseId, $caseData, $cardsData['cards'] ?? null);
 
         return response()->json(null, Response::HTTP_OK);
     }
 
     public function destroy(Cases $case): JsonResponse
     {
-        $this->casesService->deleteById($case->id);
+        $this->casesRepository->deleteById($case->id);
         return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 

@@ -7,10 +7,9 @@
     <title>Laravel</title>
 
     <!-- Fonts -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
     <link href=" {{ mix('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
-          integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 </head>
 <body>
 <div id="app">
@@ -18,18 +17,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/accounting.js/0.4.1/accounting.min.js"></script>
-<script>
-    let script = document.createElement('script');
-    script.src = "https://cdn.socket.io/socket.io-1.4.5.js";
-    document.body.appendChild(script);
-
-    script.onload = function() {
-        window.socket = io.connect (':' + '<?= env('NODE_PORT', 3005)?>', { reconnect: true, query: { user_id: '4' } });
-        window.socket.io.on("connect_error", function(error) {
-            console.log('Connection error.');
-        });
-    };
-</script>
 
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/vue.js') }}"></script>

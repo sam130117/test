@@ -12,8 +12,7 @@
 */
 
 Route::get('/', 'Web\HomeController@index');
-Route::get('/email', 'Web\HomeController@index');
-Route::get('/chat', 'Web\HomeController@index');
+
 Route::post('/chat/send', 'Web\ChatController@sendMessage');
 Route::post('/email/send', 'Web\MailController@send');
 
@@ -30,6 +29,11 @@ Route::group(['prefix' => 'cases'], function () {
 Route::group(['prefix' => 'users'], function () {
     Route::get('/', 'Web\UsersController@index');
 });
+
+
+Route::any('{query}', function () {
+    return redirect('/');
+})->where('query', '.*');
 
 
 /* Storage */

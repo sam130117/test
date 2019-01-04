@@ -2,8 +2,11 @@
 
 namespace App\Http\Repositories;
 
+use App\Models\BaseModel;
 use App\User;
 use Carbon\Carbon;
+use Laravel\Passport\PersonalAccessTokenResult;
+
 
 class UsersRepository extends BaseRepository
 {
@@ -12,14 +15,12 @@ class UsersRepository extends BaseRepository
         return User::class;
     }
 
-    public function getAll()
+    public function getAll(): BaseModel
     {
-        if ($this->model)
-            return $this->model::get();
-        return null;
+        return $this->model::get();
     }
 
-    public function saveUserToken(User $user)
+    public function saveUserToken(User $user): PersonalAccessTokenResult
     {
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
@@ -32,12 +33,12 @@ class UsersRepository extends BaseRepository
         return $tokenResult;
     }
 
-    public function getAllIds()
+    public function getAllIds(): array
     {
         return $this->model::select('id')->get()->pluck('id')->toArray();
     }
 
-    public function getRandomUser()
+    public function getRandomUser(): BaseModel
     {
         $userIds = $this->getAllIds();
         $randomUserId = array_rand($userIds,1);

@@ -4,6 +4,7 @@ namespace App\Http\Repositories;
 
 
 use App\Exceptions\ServiceException;
+use App\Models\BaseModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -24,8 +25,8 @@ abstract class BaseRepository
 
         $model = new $modelName();
 
-        if (!$model instanceof Model)
-            throw new ServiceException("Class {$modelName} must be an instance of " . Model::class . '.');
+        if (!$model instanceof BaseModel)
+            throw new ServiceException("Class {$modelName} must be an instance of " . BaseModel::class . '.');
         $this->model = $model;
     }
 

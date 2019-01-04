@@ -3,6 +3,7 @@
 namespace App\Http\Repositories;
 
 use App\Models\Cards;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CardsRepository extends BaseRepository
 {
@@ -11,7 +12,7 @@ class CardsRepository extends BaseRepository
         return Cards::class;
     }
 
-    public function getAll()
+    public function getAll(): LengthAwarePaginator
     {
         $search = request('search', null);
         $cardType = request('cardType', null);
