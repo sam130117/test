@@ -16,13 +16,13 @@ export const router = new VueRouter({
     mode  : 'history',
     routes: [
         {
-            path     : '/login',
-            name     : 'login',
+            path     : '/sign-in',
+            name     : 'sign-in',
             component: Login
         },
         {
-            path     : '/register',
-            name     : 'register',
+            path     : '/sign-up',
+            name     : 'sign-up',
             component: Register
         },
         {
@@ -60,12 +60,14 @@ export const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
-    const publicPages = ['/login', '/register'];
+    const publicPages = ['/sign-in', '/sign-up'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('authUser');
 
-    if (authRequired && !loggedIn)
-        return next('/login');
+    if (authRequired && !loggedIn) {
+        console.log(authRequired,  to.path);
+        return next('/sign-in');
+    }
 
     next();
 });

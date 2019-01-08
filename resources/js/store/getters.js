@@ -12,5 +12,8 @@ let getters = {
     isUserLoggedIn: state => {
         return state.authUser;
     },
+    authErrors: state => {
+        return state.authErrors;
+    }
 };
 export default getters;

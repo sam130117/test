@@ -2,7 +2,8 @@
 
 let state = {
     authUser: null,
-    messages: []
+    messages: [],
+    authErrors  : {}
 };
 
 export default state;

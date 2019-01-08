@@ -12,6 +12,12 @@
 */
 
 Route::get('/', 'Web\HomeController@index');
+Route::get('/sign-in', 'Web\HomeController@index');
+Route::get('/sign-up', 'Web\HomeController@index');
+Route::post('/sign-in', 'Auth\LoginController@login');
+Route::post('/sign-out', 'Auth\LoginController@logout');
+Route::post('/sign-up', 'Auth\RegisterController@register');
+
 
 Route::post('/chat/send', 'Web\ChatController@sendMessage');
 Route::post('/email/send', 'Web\MailController@send');
